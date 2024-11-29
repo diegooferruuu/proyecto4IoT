@@ -36,7 +36,7 @@ public:
 
     int getState(float temperature) {
         if (temperature >= -55 && temperature < 35) return 0;
-        if (temperature >= 35 && temperature < 40.5) return 1;
+        if (temperature >= 35 && temperature < 40.9) return 1;
         if (temperature >= 40.5 && temperature < 125) return 2;
         return -1; 
     }
@@ -172,7 +172,7 @@ private:
             clientId += String(random(0xffff), HEX);
             if (client.connect(clientId.c_str())) {
                 Serial.println("connected");
-                client.subscribe("$aws/things/tempEsp32/shadow/update/accepted");
+                client.subscribe("$aws/things/incubator_v2/shadow/update/accepted");
             } else {
                 Serial.print("failed, rc=");
                 Serial.print(client.state());
@@ -186,8 +186,8 @@ private:
         StaticJsonDocument<200> doc;
         deserializeJson(doc, payload, length);
 
-        if (String(topic) == "$aws/things/tempEsp32/shadow/update/accepted") {
-            if (doc["state"]["desired"].containsKey("auto")) {
+        if (String(topic) == "$aws/things/incubator_v2/shadow/update/accepted") {
+            if (doc["state"]["desired"].containsKey("incubatorMode")) {
                 bool newAutoMode = doc["state"]["desired"]["incubatorMode"] == 1;
                 setAutoMode(newAutoMode);
             }
@@ -276,7 +276,7 @@ d7MypAUpsGvQdm+TegCU5XucawZXhhNuhcTFOaPhv02WvG6ht/CftOw=
 };
 
 TemperatureSensor temperatureSensor(4);
-Communicator comm("FERRUVEGA", "Ignacio1973*-", "a1o8cg6i3hlsiy-ats.iot.us-east-2.amazonaws.com", "$aws/things/tempEsp32/shadow/update");
+Communicator comm("FERRUVEGA", "Ignacio73*-", "a1o8cg6i3hlsiy-ats.iot.us-east-2.amazonaws.com", "$aws/things/incubator_v2/shadow/update");
 
 void setup() {
     Serial.begin(115200);
