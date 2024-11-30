@@ -35,9 +35,9 @@ public:
     }
 
     int getState(float temperature) {
-        if (temperature >= -55 && temperature < 35) return 0;
+        if (temperature >= 0 && temperature < 35) return 0;
         if (temperature >= 35 && temperature < 40.9) return 1;
-        if (temperature >= 40.5 && temperature < 125) return 2;
+        if (temperature >= 41 && temperature < 125) return 2;
         return -1; 
     }
 
